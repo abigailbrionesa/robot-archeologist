@@ -1,3 +1,7 @@
+# CSC 171 { Project 2: The Robot Archaelogist Adventure }
+# Abigail Briones
+# abrione3@u.rochester.edu
+
 class Cell:
     '''
     represents a single location in the grid
@@ -11,6 +15,9 @@ class Cell:
         self._col = col
         self._type = type
         self._next = None
+    
+    def __str__(self):
+        return f'Cell: [{self._type}] ({self._row}, {self._col})'
         
 class LinkedPath:
     '''
@@ -74,6 +81,10 @@ class Grid:
         self._grid = grid
         self._rows = rows
         self._cols = cols
+    
+    def _char_to_type(self, ch):
+        legend = {'wall':'#', 'open':'.','treasure':'T','trap':'X','start':'S','exit':'E'}
+        pass
     
     def get_cell(self,row,col):
         '''
@@ -176,3 +187,7 @@ class Robot:
         displays the current linked path of visited cells'''
         self._path.show_path()
         return
+    
+
+def main():
+    pass
