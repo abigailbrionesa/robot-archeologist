@@ -121,6 +121,7 @@ class Robot:
         self._energy = 20 #robot's remaining energy
         self._path = LinkedPath(None) #represents the visited cells
         self._current_cell = None #current location
+        self._treasures_collected = 0
     
     def _find_start(self):
         '''
@@ -145,6 +146,21 @@ class Robot:
             return
         self._energy -= 1
         self._path.add_cell = self._current_cell
+        
+        # update: robot's current coordinates and cell type
+        print(f'Robot is in cell of type {self._current_cell._type} at ({self._current_cell._row},{self._current_cell._col})')
+        
+        if self._current_cell._type == 'treasure':
+            print(f'Amazing! You have found a treasure. Now you have {self._treasures_collected} treasures collected.')
+            self._treasures_collected += 1
+        elif self._current_cell._type == 'traps':
+            print(f'Oh no! Trap encountered. You might considered backtracking')
+        elif self._current_cell._type == 'exit':
+            print(f'Congratulations! Exit founded. ')
+            print(f'You have collected {self._treasures_collected} treasures, and your remaining energy is {self._energy}')
+        self.show_memory()
+        
+        print(f"Robot's energy remaining: ", self._energy)
         return
     
     def backgrack(self):
