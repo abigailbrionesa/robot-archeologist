@@ -105,10 +105,17 @@ class Grid:
     '''
 
     def __init__(self,layout):
+        
+        if not layout or not layout[0]:
+            print(dim("Error: Empty grid"))
+            self._rows = 0
+            self._cols = 0
+            self._grid = []
+            return
+
         # layout: 2d list of characters representing the maze
         # rows, cols: dimensions of the grid
         # grid: 2d list of Cell objects
-
         self._rows = len(layout)
         self._cols = len(layout[0])
         self._grid = []
@@ -205,8 +212,14 @@ class Robot:
         print(dim(f'  [Energy level: {self._energy}]'))
             
     def move(self,direction):
+        
+        if self._current_cell is None:
+            print(f"Robot {self._name}: There was no starting position. Cannot move.")
+            return
+
         if self._energy == 0:
             print(f'Robot {self._name}: I can no longer move. I have no energy.')
+            
         current_row, current_col = self._current_cell._row, self._current_cell._col
         if direction == 'up':
             current_row -= 1
@@ -258,6 +271,9 @@ class Robot:
                 print(f'Robot {self._name}: Oh no! I cannot move {direction}')
                 
     def display_location(self):
+        if self._current_cell is None:
+            print(f"Robot {self._name}: I am not in the map")
+            return
         visited_pos = {(node._cell._row, node._cell._col) for node in self._path}
         return self._grid.display(self._current_cell._row, self._current_cell._col, visited_pos)
     
@@ -278,34 +294,14 @@ class Robot:
 # Favorite Movie: Shutter Island (I do not usually watch movies)
 
 def main():
-    
     print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
-    
-    temple_layout = [
-    ['#', '#', '#', '#', '#', '#'],
-    ['#', 'S', '.', 'T', '.', '#'],
-    ['#', '.', '#', '.', 'X', '#'],
-    ['#', '.', '.', '.', 'E', '#'],
-    ['#', '#', '#', '#', '#', '#']
-    ]
-
+    temple_layout = []
     grid = Grid(temple_layout)
     grid.display()
     robot = Robot(name="Abi", grid=grid)
     robot._find_start()
     robot.move("right")
     robot.display_location()
-    robot.move("right")
-    robot.display_location()
-    robot.move("right")
-    robot.display_location()
-    robot.move("right")
-    robot.display_location()
     robot.move("down")
-    robot.move("down")
-    robot.move("down")
-
-
-
-
+    robot.display_location()
 main()
