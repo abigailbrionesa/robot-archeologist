@@ -3,6 +3,9 @@
 # abrione3@u.rochester.edu
 
 class PathNode:
+    '''
+    represents a node in the DoublyLinkedPath
+    '''
     def __init__(self,cell):
         self._cell = cell
         self._next = None
@@ -22,8 +25,6 @@ class Cell:
     represents a single location in the grid
     preconditions:
     - the provided coordinates and type must correspond to a valid grid cell
-    postconditions:
-    - a Cell object is created with no linkage (next = None)
     '''
     def __init__(self,row,col,type):
         self._row = row
@@ -35,9 +36,7 @@ class Cell:
         
 class DoublyLinkedPath:
     '''
-    represents the robot's memory of visited cells as a singly linked list
-    preconditions:
-    - input parameter cell must be a valid Cell object
+    represents the robot's memory of visited cells as a doubly linked list
     postconditoins
     - for add_cell, the linked list contains one additional node, and head points to the new cell
     - for remove_last, the most recent node is removed and the list size decreases by one
