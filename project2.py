@@ -36,13 +36,9 @@ class LinkedPath:
         '''
         adds a new cell to the beginning of the list
         '''
-        if not self._head:
-            self._head = cell
-        else:
-            prev_head = self._head
-            cell._next = prev_head
-            self._head = cell
-            self._size += 1
+        cell._next = self._head
+        self._head = cell
+        self._size += 1
         
     def remove_last(self):
         '''
@@ -68,6 +64,12 @@ class LinkedPath:
         '''
         textual_cells = [str(cell) for cell in self]
         return ("[" + " -> ".join(textual_cells) + "]")
+    
+class InvalidGridCharacterError(Exception):
+    pass
+class InvalidMovementError(Exception):
+    pass
+
 
 class Grid:
     '''
@@ -87,41 +89,52 @@ class Grid:
         self._rows = len(layout)
         self._cols = len(layout[0])
         self._grid = []
-        
+        print('Loading grid...')
         for i in range(self._rows):
             current_row = []
             for j in range(self._cols):
-                cell_type = self._char_to_type(layout[i][j])
+                try:
+                    cell_type = self._char_to_type(layout[i][j])
+                except InvalidGridCharacterError as e:
+                    print(e, '(adding cell of type "open" instead)')
+                    cell_type = 'open'
                 current_row.append(Cell(row=i, col=j, type=cell_type))
             self._grid.append(current_row)
+        print('Temple Layout created!')
         
     def _char_to_type(self, ch):
-            legend = {'#':'wall', '.': 'open','T':'treasure','X':'trap','S':'start','E':'exit'}
-            return legend[ch]
+        legend = {'#':'wall', '.': 'open','T':'treasure','X':'trap','S':'start','E':'exit'}
+        if ch not in legend:
+            raise InvalidGridCharacterError(f"Error: '{ch}' is an invalid grid character")
+        return legend[ch]
+        
+    def _type_to_char(self, type):
+        legend = {'wall':'#', 'open':'.', 'treasure':'T', 'trap':'X', 'start':'S', 'exit':'E'}
+        return legend[type]
 
     def get_cell(self,row,col):
         '''
         returns the Cell at the given coordinates
         '''
-        return self._grid[row][col]
+        if self.is_valid(row,col):
+            return self._grid[row][col]
+        return
     
     def is_valid(self,row,col):
         '''
         returns True if movement to that position is possible (not a wall # or outside bounds)
         '''
-        if row > self._rows or col > self._cols:
-            print('outside bounds')
+        if row < 0 or row >= self._rows or col < 0 or col >= self._cols:
             return False
-        index = row * self._cols + col
-        if self._grid[index]._type == 'wall':
-            print('you found a wall')
+        if self._grid[row][col]._type == 'wall':
             return False
         return True
     
     def display(self):
+        print('Temple Layout:')
         for row in range(self._rows):
             for col in range(self._cols):
-                ch = self._grid[row][col]._type
+                ch = self._type_to_char(self._grid[row][col]._type)
                 print(ch, end=' ')
             print('')
 
@@ -140,7 +153,7 @@ class Robot:
         self._name = name
         self._grid = grid
         self._energy = 20 #robot's remaining energy
-        self._path = LinkedPath(None) #represents the visited cells
+        self._path = LinkedPath() #represents the visited cells
         self._current_cell = None #current location
         self._treasures_collected = 0
     
@@ -148,67 +161,104 @@ class Robot:
         '''
         locates the starting cell 'S' in the grid
         '''
-        for i in range(1,self._grid + 1):
-            if self._grid[i] == 'S':
-                starting_index = i
-        return starting_index
+        for i in range(self._grid._rows):
+            for j in range(self._grid._cols):
+                cell = self._grid._grid[i][j]
+                if cell._type == 'start':
+                    self._current_cell = cell
+                    self._path.add_cell(cell)
+                    return cell
+        print('  [No starting cell found]')
+        return 
     
+    def update_energy(self,val):
+        
     def move(self,direction):
+        if self._energy == 0:
+            print(f'Robot {self._name}: I can no longer move. I have no energy.')
+        current_row, current_col = self._current_cell._row, self._current_cell._col
         if direction == 'up':
-            self._current_cell = self._current_cell - self._grid._rows
+            current_row -= 1
         elif direction == 'down':
-            self._current_cell = self._current_cell + self._grid._rows
+            current_row += 1
         elif direction == 'left':
-            self._current_cell = self._current_cell - 1
+            current_col -= 1
         elif direction == 'right':
-            self._current_cell = self._current_cell + 1
+            current_col += 1
         else:
-            print('invalid direction')
+            print(f'Robot {self._name}: I can only move up, down, left, or right')
             return
-        self._energy -= 1
-        self._path.add_cell = self._current_cell
         
-        # update: robot's current coordinates and cell type
-        print(f'Robot is in cell of type {self._current_cell._type} at ({self._current_cell._row},{self._current_cell._col})')
+        try:
+            print(f"Robot {self._name}: Let's move {direction} to ({current_row},{current_col})")
+            new_position = self._grid.get_cell(current_row, current_col)
+            if new_position is None:
+                raise InvalidMovementError(f"Error: '{new_position}' is out of bounds or a wall")
+            self._current_cell = new_position
+            self._energy -= 1
+            print(f'  [Energy level: {self._energy}]')
+            self._path.add_cell(self._current_cell)
         
-        if self._current_cell._type == 'treasure':
-            print(f'Amazing! You have found a treasure. Now you have {self._treasures_collected} treasures collected.')
-            self._treasures_collected += 1
-        elif self._current_cell._type == 'traps':
-            print(f'Oh no! Trap encountered. You might considered backtracking')
-        elif self._current_cell._type == 'exit':
-            print(f'Congratulations! Exit founded. ')
-            print(f'You have collected {self._treasures_collected} treasures, and your remaining energy is {self._energy}')
-        self.show_memory()
-        
-        print(f"Robot's energy remaining: ", self._energy)
-        return
+            print(f'  [Robot {self._name} is at {str(self._current_cell)}]')
+            
+            if self._current_cell._type == 'treasure':
+                self._treasures_collected += 1
+                print(f'Robot {self._name}: Yay! I have found a treasure. Now I have {self._treasures_collected} of them.')
+                self._energy += 2
+                print(f'  [Energy level: {self._energy}]')
+            elif self._current_cell._type == 'trap':
+                print(f'Robot {self._name}: Oh no! I fell into a trap. I will go back')
+                self._energy -= 3
+                print(f'  [Energy level: {self._energy}]')
+                self.backtrack()
+                print(f'  [Robot {self._name} backtracked to {self._current_cell}]')
+            elif self._current_cell._type == 'exit':
+                print(f'Robot {self._name}: Omg! I found the exit. I won')
+                print(f'  [Total treasures collected: {self._treasures_collected}]')
+                print(f'  [Remaining energy: {self._energy}]')
+                print(f'  [Path Memory: {self.show_memory()}]')
+            return
     
-    def backgrack(self):
+        except InvalidMovementError:
+                print(f'Robot {self._name}: Oh no! I cannot move {direction}')
+                
+    
+    def backtrack(self):
         '''
         removes the most recent cell from the linked path and moves the robot back to the previous cell
         '''
-        previous_pos = self._path.remove_last
-        self._current_cell = previous_pos
+        self._path.remove_last() 
+        self._current_cell = self._path._head
         return
     
     def show_memory(self):
         '''
         displays the current linked path of visited cells'''
-        self._path.show_path()
-        return
+        return self._path.show_path()
     
 # Student Email: abrione3@u.rochester.edu
 # Favorite Movie: Shutter Island (I do not usually watch movies)
 
 def main():
     
+    print('--- The Robot Archaeologist Adventure ---')
+    
     temple_layout = [
-    ['#', 'S', '.', 'T', '#'],
-    ['#', '.', '#', '.', 'X'],
-    ['#', '.', '.', '.', 'E']
+    ['#', '#', '#', '#', '#', '#'],
+    ['#', 'S', '.', 'T', '.', '#'],
+    ['#', '.', '#', '.', 'X', '#'],
+    ['#', '.', '.', '.', 'E', '#'],
+    ['#', '#', '#', '#', '#', '#']
     ]
-    
-    temple_grid = Grid(grid=temple_layout)
-    
-    temple_grid.display
+
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="Abi", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.move("right")
+    robot.move("right")
+    robot.move("right")
+
+
+main()
