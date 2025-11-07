@@ -17,7 +17,6 @@ def strong(text):
 def underline(text):
     return (f'\033[4m{text}\033[0m')
 
-
 class Cell:
     '''
     represents a single location in the grid
@@ -261,7 +260,7 @@ class Robot:
                 self.backtrack()
                 print(dim(f'  [Robot {self._name} backtracked to {self._current_cell}]'))
             elif self._current_cell._type == 'exit':
-                print(dim(f'Robot {self._name}: Omg! I found the exit. I won'))
+                print(f'Robot {self._name}: Omg! I found the exit. I won')
                 print(dim(f'  [Total treasures collected: {self._treasures_collected}]'))
                 print(dim(f'  [Remaining energy: {self._energy}]'))
                 print(dim(f'  [Path Memory: {self.show_memory()}]'))
@@ -295,13 +294,42 @@ class Robot:
 
 def main():
     print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
-    temple_layout = []
+    temple_layout = [
+        ['S', '.', 'T', '#', '.', 'X', '.'],
+        ['#', 'T', '.', '.', 'T', '#', 'E'],
+        ['.', '.', '.', 'X', '.', '.', '.'],
+        ['T', '#', '.', '.', '.', '.', 'T'],
+        ['.', '.', '#', 'T', '.', '#', '.']
+    ]
     grid = Grid(temple_layout)
     grid.display()
-    robot = Robot(name="Abi", grid=grid)
+    robot = Robot(name="R-171", grid=grid)
     robot._find_start()
+    robot.move("right")
+    robot.display_location()
     robot.move("right")
     robot.display_location()
     robot.move("down")
     robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("up")
+    robot.display_location()
+    robot.move("up")
+    robot.display_location()
+    print(robot._path.show_path())
+
+
 main()
