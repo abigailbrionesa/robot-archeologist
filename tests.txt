@@ -1,0 +1,30 @@
+Abigail Briones
+abrione3@u.rochester.edu
+
+1. Test Case: empty grid
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = []
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="Abi", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+main()
+
+output:
+ THE ROBOT ARCHEOLOGIST ADVENTURE 
+Error: Empty grid
+Temple Layout:
+  [No starting cell found]
+Robot Abi: There was no starting position. Cannot move.
+Robot Abi: I am not in the map
+Robot Abi: There was no starting position. Cannot move.
+Robot Abi: I am not in the map
+PS C:\Users\abiga\Documents\CSC171\project2> 
+
+2. Test Case: no starting position
