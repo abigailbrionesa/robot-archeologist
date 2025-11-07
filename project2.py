@@ -17,7 +17,7 @@ class Cell:
         self._next = None
     
     def __str__(self):
-        return f'Cell: [{self._type}] ({self._row}, {self._col})'
+        return f'[<{self._type}> cell at ({self._row},{self._col})]'
         
 class LinkedPath:
     '''
@@ -66,32 +66,44 @@ class LinkedPath:
         '''
         prints a textual representation of all visited cells
         '''
-        for cell in self:
-            print("[" + " -> ".join(cell._type for cell in self) + "]")
-        
+        textual_cells = [str(cell) for cell in self]
+        return ("[" + " -> ".join(textual_cells) + "]")
+
 class Grid:
     '''
+    represents the archeological site
     encapsulates the temple layout, providing safe access to cells and movement validation
     preconditions:
     - input grid layout must contain valid characters
     postconditoins:
     - a grid of Cell objects is constructed with correct type mapping
     '''
-    def __init__(self,grid,rows,cols):
-        self._grid = grid
-        self._rows = rows
-        self._cols = cols
-    
+
+    def __init__(self,layout):
+        # layout: 2d list of characters representing the maze
+        # rows, cols: dimensions of the grid
+        # grid: 2d list of Cell objects
+
+        self._rows = len(layout)
+        self._cols = len(layout[0])
+        self._grid = []
+        
+        for i in range(self._rows):
+            current_row = []
+            for j in range(self._cols):
+                cell_type = self._char_to_type(layout[i][j])
+                current_row.append(Cell(row=i, col=j, type=cell_type))
+            self._grid.append(current_row)
+        
     def _char_to_type(self, ch):
-        legend = {'wall':'#', 'open':'.','treasure':'T','trap':'X','start':'S','exit':'E'}
-        pass
-    
+            legend = {'#':'wall', '.': 'open','T':'treasure','X':'trap','S':'start','E':'exit'}
+            return legend[ch]
+
     def get_cell(self,row,col):
         '''
         returns the Cell at the given coordinates
         '''
-        index = row * self._cols + col
-        return self._grid[index]
+        return self._grid[row][col]
     
     def is_valid(self,row,col):
         '''
@@ -101,18 +113,16 @@ class Grid:
             print('outside bounds')
             return False
         index = row * self._cols + col
-        if self._grid[index] == 'wall':
+        if self._grid[index]._type == 'wall':
             print('you found a wall')
             return False
         return True
     
     def display(self):
-        legend = {'wall':'#', 'open':'.','treasure':'T','trap':'X','start':'S','exit':'E'}
         for row in range(self._rows):
             for col in range(self._cols):
-                index = row * self._cols + col
-                character = legend[self._grid[index]]
-                print(character, end=' ')
+                ch = self._grid[row][col]._type
+                print(ch, end=' ')
             print('')
 
 class Robot:
@@ -188,6 +198,17 @@ class Robot:
         self._path.show_path()
         return
     
+# Student Email: abrione3@u.rochester.edu
+# Favorite Movie: Shutter Island (I do not usually watch movies)
 
 def main():
-    pass
+    
+    temple_layout = [
+    ['#', 'S', '.', 'T', '#'],
+    ['#', '.', '#', '.', 'X'],
+    ['#', '.', '.', '.', 'E']
+    ]
+    
+    temple_grid = Grid(grid=temple_layout)
+    
+    temple_grid.display
