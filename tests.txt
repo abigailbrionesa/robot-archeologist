@@ -1,6 +1,187 @@
 Abigail Briones
 abrione3@u.rochester.edu
 
+In the terminal, the display can be better appreciated
+
+
+Standard Test Case 
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = [
+        ['S', '.', 'T', '#', '.', 'X', '.'],
+        ['#', 'T', '.', '.', 'T', '#', 'E'],
+        ['.', '.', '.', 'X', '.', '.', '.'],
+        ['T', '#', '.', '.', '.', '.', 'T'],
+        ['.', '.', '#', 'T', '.', '#', '.']
+    ]
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="R-171", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("up")
+    robot.display_location()
+    robot.move("up")
+    robot.display_location()
+    print(robot._path.show_path())
+
+
+main()
+
+
+output:
+THE ROBOT ARCHEOLOGIST ADVENTURE 
+Loading grid...
+Temple Layout created!
+Temple Layout:
+ S   .   T   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (0,1)
+  [Energy level: 19]
+  [Robot R-171 is at [<open> cell at (0,1)]]
+Temple Layout:
+ S   R   T   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (0,2)
+  [Energy level: 18]
+  [Robot R-171 is at [<treasure> cell at (0,2)]]
+Robot R-171: Yay! I have found a treasure. Now I have 1 of them.
+  [Energy level: 20]
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (1,2)
+  [Energy level: 19]
+  [Robot R-171 is at [<open> cell at (1,2)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   R   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (2,2)
+  [Energy level: 18]
+  [Robot R-171 is at [<open> cell at (2,2)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   R   X   .   .   .
+ T   #   .   .   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (3,2)
+  [Energy level: 17]
+  [Robot R-171 is at [<open> cell at (3,2)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   R   .   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (4,2)
+Robot R-171: Oh no! I cannot move down
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   R   .   .   .   T  
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (3,3)
+  [Energy level: 16]
+  [Robot R-171 is at [<open> cell at (3,3)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   R   .   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (3,4)
+  [Energy level: 15]
+  [Robot R-171 is at [<open> cell at (3,4)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   R   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (3,5)
+  [Energy level: 14]
+  [Robot R-171 is at [<open> cell at (3,5)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   .   R   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (3,6)
+  [Energy level: 13]
+  [Robot R-171 is at [<treasure> cell at (3,6)]]
+Robot R-171: Yay! I have found a treasure. Now I have 2 of them.
+  [Energy level: 15]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   .   .   R 
+ .   .   #   T   .   #   .
+Robot R-171: Let's move up to (2,6)
+  [Energy level: 14]
+  [Robot R-171 is at [<open> cell at (2,6)]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   E
+ .   .   .   X   .   .   R 
+ T   #   .   .   .   .   . 
+ .   .   #   T   .   #   .
+Robot R-171: Let's move up to (1,6)
+  [Energy level: 13]
+  [Robot R-171 is at [<exit> cell at (1,6)]]
+Robot R-171: Omg! I found the exit. I won
+  [Total treasures collected: 2]
+  [Remaining energy: 13]
+  [Path Memory: [[<exit> cell at (1,6)] -> [<open> cell at (2,6)] -> [<open> cell at (3,6)] -> [<open> cell at (3,5)] -> [<open> cell at (3,4)] -> [<open> cell at (3,3)] -> [<open> cell at (3,2)] -> [<open> cell at (2,2)] -> [<open> cell at (1,2)] -> [<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<start> cell at (0,0)]]]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   T   .   .   T   #   R 
+ .   .   .   X   .   .   . 
+ T   #   .   .   .   .   . 
+ .   .   #   T   .   #   .
+[[<exit> cell at (1,6)] -> [<open> cell at (2,6)] -> [<open> cell at (3,6)] -> [<open> cell at (3,5)] -> [<open> cell at (3,4)] -> [<open> cell at (3,3)] -> [<open> cell at (3,2)] -> [<open> cell at (2,2)] -> [<open> cell at (1,2)] -> [<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<start> cell at (0,0)]]
+PS C:\Users\abiga\Documents\CSC171\project2>
+
+
+
+
+
+
 1. Test Case: empty grid
 
 def main():
@@ -28,3 +209,379 @@ Robot Abi: I am not in the map
 PS C:\Users\abiga\Documents\CSC171\project2> 
 
 2. Test Case: no starting position
+
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = [
+    ['#', '#', '#', '#', '#', '#'],
+    ['#', '.', '.', 'T', '.', '#'],
+    ['#', '.', '#', '.', 'X', '#'],
+    ['#', '.', '.', '.', 'E', '#'],
+    ['#', '#', '#', '#', '#', '#']
+    ]
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="Abi", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+main()
+
+output:  THE ROBOT ARCHEOLOGIST ADVENTURE 
+Loading grid...
+Temple Layout created!
+Temple Layout:
+ #   #   #   #   #   #
+ #   .   .   T   .   #
+ #   .   #   .   X   #
+ #   .   .   .   E   #
+ #   #   #   #   #   #
+  [No starting cell found]
+Robot Abi: There was no starting position. Cannot move.
+Robot Abi: I am not in the map
+Robot Abi: There was no starting position. Cannot move.
+Robot Abi: I am not in the map
+PS C:\Users\abiga\Documents\CSC171\project2> 
+
+3. Test Case (1 x 1 grid)
+
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = [
+    ['S']
+    ]
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="Abi", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+main()
+
+output:
+
+ THE ROBOT ARCHEOLOGIST ADVENTURE 
+Loading grid...
+Temple Layout created!
+Temple Layout:
+ S
+Robot Abi: Let's move right to (0,1)
+Robot Abi: Oh no! I cannot move right
+Temple Layout:
+ R 
+Robot Abi: Let's move down to (1,0)
+Robot Abi: Oh no! I cannot move down
+Temple Layout:
+ R 
+PS C:\Users\abiga\Documents\CSC171\project2> 
+
+4. Test Case: maze created with invalid character
+
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = [
+    ['A', '#', '#', '#', '#', '#'],
+    ['#', '.', '.', 'T', '.', '#'],
+    ['#', '.', '#', '.', 'X', '#'],
+    ['#', '.', 'S', '.', 'E', '#'],
+    ['#', '#', '#', '#', '#', '#']
+    ]
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="Abi", grid=grid)
+    robot._find_start()
+    robot.move("down")
+    robot.display_location()
+    robot.move("left")
+    robot.display_location()
+main()
+
+output:
+
+ THE ROBOT ARCHEOLOGIST ADVENTURE 
+Loading grid...
+Error: 'A' is an invalid grid character (adding cell of type "open" instead)
+Temple Layout created!
+Temple Layout:
+ .   #   #   #   #   #
+ #   .   .   T   .   #
+ #   .   #   .   X   #
+ #   .   S   .   E   #
+ #   #   #   #   #   #
+Robot Abi: Let's move down to (4,2)
+Robot Abi: Oh no! I cannot move down
+Temple Layout:
+ .   #   #   #   #   #
+ #   .   .   T   .   #
+ #   .   #   .   X   #
+ #   .   R   .   E   #
+ #   #   #   #   #   #
+Robot Abi: Let's move left to (3,1)
+  [Energy level: 19]
+  [Robot Abi is at [<open> cell at (3,1)]]
+Temple Layout:
+ .   #   #   #   #   #
+ #   .   .   T   .   #
+ #   .   #   .   X   #
+ #   R   S   .   E   #
+ #   #   #   #   #   #
+PS C:\Users\abiga\Documents\CSC171\project2> 
+
+
+5. Test Case: Normal
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = [
+    ['S', '.', 'T'],
+    ['.', '#', 'E'],
+    ]
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="R-171", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+
+main()
+
+output:
+
+ents/CSC171/project2/project2.py
+ THE ROBOT ARCHEOLOGIST ADVENTURE 
+Loading grid...
+Temple Layout created!
+Temple Layout:
+ S   .   T
+ .   #   E
+Robot R-171: Let's move right to (0,1)
+  [Energy level: 19]
+  [Robot R-171 is at [<open> cell at (0,1)]]
+Temple Layout:
+ S   R   T
+ .   #   E
+Robot R-171: Let's move right to (0,2)
+  [Energy level: 18]
+  [Robot R-171 is at [<treasure> cell at (0,2)]]
+Robot R-171: Yay! I have found a treasure. Now I have 1 of them.
+  [Energy level: 20]
+Temple Layout:
+ S   .   R 
+ .   #   E
+Robot R-171: Let's move down to (1,2)
+  [Energy level: 19]
+  [Robot R-171 is at [<exit> cell at (1,2)]]
+Robot R-171: Omg! I found the exit. I won
+  [Total treasures collected: 1]
+  [Remaining energy: 19]
+  [Path Memory: [[<exit> cell at (1,2)] -> [<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<start> cell at (0,0)]]]
+Temple Layout:
+ S   .   . 
+ .   #   R 
+Robot R-171: Let's move right to (1,3)
+Robot R-171: Oh no! I cannot move right
+Temple Layout:
+ S   .   . 
+ .   #   R 
+PS C:\Users\abiga\Documents\CSC171\project2> 
+
+
+6: Test case: Normal complex
+
+def main():
+    print(strong(' THE ROBOT ARCHEOLOGIST ADVENTURE '))
+    temple_layout = [
+        ['S', '.', 'T', '#', '.', 'X', '.'],
+        ['#', 'T', '#', '.', 'T', '#', 'E'],
+        ['.', '.', '.', 'X', '.', '.', '.'],
+        ['T', '#', '.', '.', 'X', '.', 'T'],
+        ['.', '.', '#', 'T', '.', '#', '.']
+    ]
+    grid = Grid(temple_layout)
+    grid.display()
+    robot = Robot(name="R-171", grid=grid)
+    robot._find_start()
+    robot.move("right")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("left")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    print(robot._path.show_path())
+    robot.move("right")
+    robot.display_location()
+    robot.move("up")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("down")
+    robot.display_location()
+    robot.move("left")
+    robot.display_location()
+    robot.move("up")
+    robot.display_location()
+    robot.move("right")
+    robot.display_location()
+    print(robot._path.show_path())
+
+
+main()
+
+output:
+THE ROBOT ARCHEOLOGIST ADVENTURE 
+Loading grid...
+Temple Layout created!
+Temple Layout:
+ S   .   T   #   .   X   .
+ #   T   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (0,1)
+  [Energy level: 19]
+  [Robot R-171 is at [<open> cell at (0,1)]]
+Temple Layout:
+ S   R   T   #   .   X   .
+ #   T   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (0,2)
+  [Energy level: 18]
+  [Robot R-171 is at [<treasure> cell at (0,2)]]
+Robot R-171: Yay! I have found a treasure. Now I have 1 of them.
+  [Energy level: 20]
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   T   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .  
+Robot R-171: Let's move down to (1,2)
+Robot R-171: Oh no! I cannot move down
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   T   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move left to (0,1)
+  [Energy level: 19]
+  [Robot R-171 is at [<open> cell at (0,1)]]
+Temple Layout:
+ S   R   .   #   .   X   .
+ #   T   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (1,1)
+  [Energy level: 18]
+  [Robot R-171 is at [<treasure> cell at (1,1)]]
+Robot R-171: Yay! I have found a treasure. Now I have 2 of them.
+  [Energy level: 20]
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   R   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (1,2)
+Robot R-171: Oh no! I cannot move right
+Temple Layout:
+ S   .   .   #   .   X   .
+ #   R   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+[[<open> cell at (1,1)] -> [<open> cell at (0,1)] -> [<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<start> cell at (0,0)]]    
+Robot R-171: Let's move right to (1,2)
+Robot R-171: Oh no! I cannot move right
+Temple Layout:
+ S   .   .   #   .   X   .  
+ #   R   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move up to (0,1)
+  [Energy level: 19]
+  [Robot R-171 is at [<open> cell at (0,1)]]
+Temple Layout:
+ S   R   .   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (0,2)
+  [Energy level: 18]
+  [Robot R-171 is at [<open> cell at (0,2)]]
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (1,2)
+Robot R-171: Oh no! I cannot move down
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move down to (1,2)
+Robot R-171: Oh no! I cannot move down
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move left to (0,1)
+  [Energy level: 17]
+  [Robot R-171 is at [<open> cell at (0,1)]]
+Temple Layout:
+ S   R   .   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T  
+ .   .   #   T   .   #   .
+Robot R-171: Let's move up to (-1,1)
+Robot R-171: Oh no! I cannot move up
+Temple Layout:
+ S   R   .   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+Robot R-171: Let's move right to (0,2)
+  [Energy level: 16]
+  [Robot R-171 is at [<open> cell at (0,2)]]
+Temple Layout:
+ S   .   R   #   .   X   .
+ #   .   #   .   T   #   E
+ .   .   .   X   .   .   .
+ T   #   .   .   X   .   T
+ .   .   #   T   .   #   .
+[[<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<open> cell at (1,1)] -> [<open> cell at (0,1)] -> [<open> cell at (0,2)] -> [<open> cell at (0,1)] -> [<start> cell at (0,0)]]
+PS C:\Users\abiga\Documents\CSC171\project2> 
