@@ -1,24 +1,67 @@
-Abigail Briones
-abrione3@u.rochester.edu
+# The Robot Archaeologist Adventure
 
-I implemented the additional features (see code and comments)
+**CSC 171: Introduction to Computer Science — Project 2**
 
-1. Doubly Linked Path
-2. Advanced Energy Managment and Trap Penalties
-3. Dynamic Grid Visualization
-4. Path Learning and Memory Optimization
-5. If maze created with invalid character, default to open cell type
-6. Colors, underline, strong text (attractive visuals)
+## Overview
+This project simulates an autonomous exploring robot navigating an ancient temple. The robot moves through a maze, collects treasures, avoids traps, and records its journey using a linked list. The purpose of this project is to practice object-oriented programming, linked structures, and interactions between multiple classes in Python.
 
-Challenges and Solutions
-1. IndexError (list index our of range) in test case of empty grid, AttributeError -> Handle gracefully with if statement in display_location, find_start, and move
-2. I had to review the slides and my implementation of linked lists to verify correctedness
-3. I spent time brainstorming how to improve my program
-4. I had issue with PathNode attribute name, I fixed it by adding underscore when it was required
-5. When using the doubly linked list and pathnode, I had to modify other parts of my code to access the cell in node
-6. I learnt how to modify visuals in the terminal
-7. I had some problems with the removed last function, I fixed it by keeping things in correct order
-8. At first I got confused and I thought I had to manually create the cells -> The class takes care of that
-9. I confused self._path.add_cell = self._current_cell  with self._path.add_cell(self._current_cell), so I fixed it
-10. I did not want energy levels to be negative (impossible), so I created the function update_energy to safely modify it
-11. among many other challenges and solutions
+---
+
+## Learning Objectives
+- **Object-Oriented Programming**: Define classes (`Robot`, `Grid`, `Cell`, `LinkedPath`) that interact to simulate a robot exploring a temple.
+- **Linked Structures**: Implement a singly linked list to track the robot’s memory of visited cells.
+- **State & Behavior Simulation**: Update and maintain the robot’s energy, position, and treasures through method interactions.
+- **Modular Design**: Demonstrate encapsulation and proper method interfaces.
+
+---
+
+## Class Structure
+
+### `Cell`
+Represents a single cell in the temple grid.
+
+**Attributes**:
+- `row`, `col`: integer coordinates
+- `type`: `'wall'`, `'open'`, `'treasure'`, `'trap'`, `'start'`, `'exit'`
+- `next`: reference to another `Cell` object (used for the linked path)
+
+### `LinkedPath`
+Stores the robot’s memory as a singly linked list.
+
+**Methods**:
+- `add_cell(cell)`: Adds a cell to the path.
+- `remove_last()`: Removes the most recent cell (for backtracking).
+- `show_path()`: Displays all visited cells.
+
+### `Grid`
+Represents the temple layout.
+
+**Methods**:
+- `get_cell(row, col)`: Returns the `Cell` at specific coordinates.
+- `is_valid(row, col)`: Checks if the robot can move to a cell.
+- `display()`: Prints the grid layout.
+
+**Legend**:
+- `#` - wall
+- `.` - open path
+- `T` - treasure
+- `X` - trap
+- `S` - start
+- `E` - exit
+
+### `Robot`
+Models the archaeologist robot.
+
+**Attributes**:
+- `name`: Robot identifier (e.g., `R-171`)
+- `grid`: Reference to a `Grid` object
+- `energy`: Remaining energy (starts at 20)
+- `path`: `LinkedPath` of visited cells
+- `current_cell`: Current position
+- `treasures`: Count of collected treasures
+
+**Methods**:
+- `find_start()`: Locate the starting cell
+- `move(direction)`: Move in one of four directions (`up`, `down`, `left`, `right`)
+- `backtrack()`: Undo the last move
+- `show_memory()`: Display visited cells
