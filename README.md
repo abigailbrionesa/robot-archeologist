@@ -1,67 +1,74 @@
-# The Robot Archaeologist Adventure
+<samp>
 
-**CSC 171: Introduction to Computer Science — Project 2**
+# Robot Archaeologist
 
-## Overview
-This project simulates an autonomous exploring robot navigating an ancient temple. The robot moves through a maze, collects treasures, avoids traps, and records its journey using a linked list. The purpose of this project is to practice object-oriented programming, linked structures, and interactions between multiple classes in Python.
+<p>
+Robot Archaeologist is a Python simulation of an autonomous explorer moving through a temple grid. The robot tracks its path with linked structures, manages energy and treasure state, and validates movement through object-oriented classes.
+</p>
 
----
+<p>
+Built with <strong>Python classes for grid cells, robot behavior, custom exceptions, and linked-path memory</strong>.
+</p>
 
-## Learning Objectives
-- **Object-Oriented Programming**: Define classes (`Robot`, `Grid`, `Cell`, `LinkedPath`) that interact to simulate a robot exploring a temple.
-- **Linked Structures**: Implement a singly linked list to track the robot’s memory of visited cells.
-- **State & Behavior Simulation**: Update and maintain the robot’s energy, position, and treasures through method interactions.
-- **Modular Design**: Demonstrate encapsulation and proper method interfaces.
+<p>
+<img alt="Python" src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white">
+</p>
 
----
+## Highlights
 
-## Class Structure
+<ul>
+  <li>Models temple cells, walls, traps, treasures, starts, and exits.</li>
+  <li>Uses a doubly linked path structure to record movement and support backtracking.</li>
+  <li>Encapsulates robot energy, position, inventory, and movement rules.</li>
+  <li>Includes custom exceptions for invalid grids and invalid movement.</li>
+</ul>
 
-### `Cell`
-Represents a single cell in the temple grid.
+## Tech Stack
 
-**Attributes**:
-- `row`, `col`: integer coordinates
-- `type`: `'wall'`, `'open'`, `'treasure'`, `'trap'`, `'start'`, `'exit'`
-- `next`: reference to another `Cell` object (used for the linked path)
+<table>
+  <tr><th>Layer</th><th>Tools</th></tr>
+  <tr><td>Core stack</td><td>Python, Object-Oriented Programming, Doubly Linked List, Grid Simulation</td></tr>
+  <tr><td>Supporting tools</td><td>Backtracking</td></tr>
+</table>
 
-### `LinkedPath`
-Stores the robot’s memory as a singly linked list.
+## Quick Start
 
-**Methods**:
-- `add_cell(cell)`: Adds a cell to the path.
-- `remove_last()`: Removes the most recent cell (for backtracking).
-- `show_path()`: Displays all visited cells.
+<pre><code>python project2.py</code></pre>
 
-### `Grid`
-Represents the temple layout.
+## Project Structure
 
-**Methods**:
-- `get_cell(row, col)`: Returns the `Cell` at specific coordinates.
-- `is_valid(row, col)`: Checks if the robot can move to a cell.
-- `display()`: Prints the grid layout.
+<pre>project2.py - Cell, grid, path, robot, and demo code
+tests.txt - Assignment or expected-output notes</pre>
 
-**Legend**:
-- `#` - wall
-- `.` - open path
-- `T` - treasure
-- `X` - trap
-- `S` - start
-- `E` - exit
+## Validation
 
-### `Robot`
-Models the archaeologist robot.
+<p>
+Run <code>python project2.py</code> to exercise the simulation flow.
+</p>
 
-**Attributes**:
-- `name`: Robot identifier (e.g., `R-171`)
-- `grid`: Reference to a `Grid` object
-- `energy`: Remaining energy (starts at 20)
-- `path`: `LinkedPath` of visited cells
-- `current_cell`: Current position
-- `treasures`: Count of collected treasures
+## Scope Notes
 
-**Methods**:
-- `find_start()`: Locate the starting cell
-- `move(direction)`: Move in one of four directions (`up`, `down`, `left`, `right`)
-- `backtrack()`: Undo the last move
-- `show_memory()`: Display visited cells
+<p>
+The simulation is terminal-based and stores state in memory.
+</p>
+
+## Roadmap
+
+<ul>
+  <li>Add automated tests for movement, traps, treasure collection, and backtracking.</li>
+  <li>Add a small CLI for loading custom temple maps.</li>
+</ul>
+
+## License
+
+<p>
+No license file is currently included.
+</p>
+
+## Built By
+
+<p>
+Built by <strong>Abigail Briones Aranda</strong> as part of a growing AI/software engineering portfolio focused on readable systems, thoughtful interfaces, and reproducible project documentation.
+</p>
+
+</samp>
